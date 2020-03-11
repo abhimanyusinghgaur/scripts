@@ -48,5 +48,8 @@ sudo snap install vlc
 
 # IDEs and tools
 sudo snap install postman
+sudo snap install slack
 sudo snap install goland
+# below ones may require --classic flag
 sudo snap install webstorm
+sudo snap install code  # vscode
