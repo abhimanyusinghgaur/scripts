@@ -45,6 +45,7 @@ sudo usermod -aG docker $(whoami) # use Docker as a non-root user, adding your u
 
 # some softwares
 sudo snap install vlc
+sudo snap install spotify
 
 # IDEs and tools
 sudo snap install postman
