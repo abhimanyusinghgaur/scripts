@@ -4,6 +4,15 @@ set -ex
 # Get user input
 read -p "Enter your name for git config: " git_username
 read -p "Enter your email for git config: " git_email
+read -p "Install Java 8 instead of latest? [Y/n] " install_java_8
+
+# Set which java to install
+if [ "$install_java_8" = "Y" -o  "$install_java_8" = "y" ]
+then
+	java="openjdk-8-jdk openjdk-8-jre"
+else
+	java="default-jdk default-jre"
+fi
 
 # initial update
 sudo apt update
@@ -22,7 +31,8 @@ ssh-add ~/.ssh/id_rsa
 sudo apt install -y build-essential
 
 # Languages 
-sudo apt install -y gcc g++ default-jre default-jdk python3 python3-pip nodejs npm node-grunt-cli
+sudo apt install -y gcc g++ $java python3 python3-pip nodejs npm node-grunt-cli
+
 
 # build tools
 sudo apt install -y make maven
