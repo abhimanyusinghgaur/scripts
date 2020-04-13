@@ -49,11 +49,6 @@ echo "Installing make maven ..."
 sudo apt install -y make maven
 echo "Done!" && echo
 
-# Cool terminal
-echo "Installing tilix ..."
-sudo apt install -y tilix
-echo "Done!" && echo
-
 # sublime text
 echo "Installing sublime-text ..."
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
@@ -101,14 +96,29 @@ echo "Done!" && echo "Installing goland ..."
 sudo snap install goland
 echo "Done!" && echo "Installing webstorm ..."
 # below ones may require --classic flag
-sudo snap install webstorm
+sudo snap install webstorm --classic
 echo "Done!" && echo "Installing vscode ..."
-sudo snap install code  # vscode
+sudo snap install code --classic  # vscode
 echo "Done!" && echo
 
 # Add enviornment variables
 echo "export JAVA_HOME=/usr/lib/jvm/$(update-java-alternatives -l | cut -d " " -f1)" >> ~/.profile
-echo "Added JAVA_HOME environment variable" && echo
+echo "export DEFAULT_USER=$(whoami)" >> ~/.profile
+echo "Added JAVA_HOME and DEFAULT_USER environment variable" && echo
 
+# Update Terminal looks: ohMyZsh
+echo "Installing Oh My Zsh ..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sudo chsh -s $(which zsh)
+sudo apt install -y fonts-powerline
+mkdir -p ~/.fontconfig ~/.config/fontconfig # TODO: not sure which one of them actually works, so copying conf to both. Correct it later.
+curl -fsSL https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf -o ~/.fontconfig/conf.d
+cp ~/.fontconfig/conf.d ~/.config/fontconfig/
+fc-cache -vf
+printf "ZSH_THEME=\"agnoster\"\n" >> ~/.zshrc
+printf "prompt_dir() {\n  prompt_segment blue black '%2~'\n}\n" >> ~/.zshrc
+echo "Oh My Zsh setup complete!" && echo
+
+# Parting messages
 echo "You may want to install Go, Google Chrome and Zoom by yourself!"
 echo "Don't forget to restart the system."
