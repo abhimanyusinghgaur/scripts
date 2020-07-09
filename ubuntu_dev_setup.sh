@@ -49,6 +49,11 @@ echo "Installing make maven ..."
 sudo apt install -y make maven
 echo "Done!" && echo
 
+# go pprof requirements
+echo "Installing go pprof requirements ..."
+sudo apt install graphviz gv
+echo "Done!" && echo
+
 # sublime text
 echo "Installing sublime-text ..."
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
@@ -78,7 +83,7 @@ unzip -q $pb_path.zip -d $pb_path/
 sudo cp $pb_path/bin/. /usr/local/bin/ -r
 sudo cp $pb_path/include/. /usr/local/include/ -r
 rm -rf $pb_path $pb_path.zip
-echo "Protobuf compiler installed successfully!"
+echo "Protobuf compiler installed successfully!" && echo
 
 # some softwares
 echo "Installing vlc ..."
@@ -102,8 +107,8 @@ sudo snap install code --classic  # vscode
 echo "Done!" && echo
 
 # Add enviornment variables
-echo "export JAVA_HOME=/usr/lib/jvm/$(update-java-alternatives -l | cut -d " " -f1)" >> ~/.profile
-echo "export DEFAULT_USER=$(whoami)" >> ~/.profile
+printf "export JAVA_HOME=/usr/lib/jvm/$(update-java-alternatives -l | cut -d " " -f1)\n" >> ~/.profile
+printf "export DEFAULT_USER=$(whoami)\n" >> ~/.profile
 echo "Added JAVA_HOME and DEFAULT_USER environment variable" && echo
 
 # Update Terminal looks: ohMyZsh
@@ -115,10 +120,31 @@ mkdir -p ~/.fontconfig ~/.config/fontconfig # TODO: not sure which one of them a
 curl -fsSL https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf -o ~/.fontconfig/conf.d
 cp ~/.fontconfig/conf.d ~/.config/fontconfig/
 fc-cache -vf
-printf "ZSH_THEME=\"agnoster\"\n" >> ~/.zshrc
-printf "prompt_dir() {\n  prompt_segment blue black '%2~'\n}\n" >> ~/.zshrc
+# TODO: add thefuck installation and binding properly
+cat << EOF >> ~/.zshrc
+ZSH_THEME="agnoster"
+
+prompt_dir() {
+  prompt_segment blue black '%2~'
+}
+
+alias update="sudo apt update"
+alias upgrade="sudo apt upgrade"
+alias apti="sudo apt install -y"
+alias :q="exit" # vim user :)
+
+#function tf() {
+# echo "testing"
+# print "\$(thefuck \$history[\$((\$HISTCMD-1))])" > \$(tty)
+#}
+#zle -N tf
+#bindkey '\033\033' tf
+EOF
 echo "Oh My Zsh setup complete!" && echo
 
 # Parting messages
 echo "You may want to install Go, Google Chrome and Zoom by yourself!"
-echo "Don't forget to restart the system."
+echo "You may also want to add following extensions for Google Chrome:"
+echo "1. Vimium"
+echo "You may want to check-out the aliases setup for zsh"
+echo "Finally, don't forget to restart the system after all."
