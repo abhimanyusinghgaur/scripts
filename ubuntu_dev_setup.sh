@@ -20,8 +20,8 @@ sudo apt update
 echo "Done!" && echo
 
 # must haves
-echo "Installing vim git curl xclip jq ..."
-sudo apt install -y vim git curl xclip jq
+echo "Installing vim git zsh curl xclip jq ..."
+sudo apt install -y vim git zsh curl xclip jq
 echo "Done!" && echo
 
 # setup git with ssh
