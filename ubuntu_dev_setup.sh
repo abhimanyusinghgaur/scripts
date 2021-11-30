@@ -1,5 +1,6 @@
 # TODO:
 # * Add tor installation: https://flathub.org/apps/details/com.github.micahflee.torbrowser-launcher
+# * Add Oh my tmux! (https://github.com/gpakosz/.tmux) to the tmux installation. Correct env var LANG=en-IN.UTF-8
 
 #!/bin/sh
 set -e
@@ -45,6 +46,9 @@ echo "Done!" && echo
 echo "Installing gcc g++ $java python3 python3-pip nodejs npm node-grunt-cli ..."
 sudo apt install -y gcc g++ $java python3 python3-pip nodejs npm node-grunt-cli
 echo "Done!" && echo
+echo "Installing Rust ..."
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+echo "Done" && echo
 
 
 # build tools
@@ -144,6 +148,16 @@ alias :q="exit" # vim user :)
 #bindkey '\033\033' tf
 EOF
 echo "Oh My Zsh setup complete!" && echo
+
+# GitHub CLI
+echo "Installing GitHub CLI ..."
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
+echo "Done!" && echo "Setting up GitHub CLI ..."
+gh auth login
+echo "Done!"
 
 # Parting messages
 echo "You may want to install Go, Google Chrome and Zoom by yourself!"
