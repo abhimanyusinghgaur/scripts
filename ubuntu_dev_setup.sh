@@ -30,8 +30,8 @@ echo "Done!" && echo
 
 # setup git with ssh
 echo "Setting up git with ssh ..."
-git config --global user.name $git_username 
-git config --global user.email $git_email
+git config --global user.name "$git_username"
+git config --global user.email "$git_email"
 ssh-keygen -t rsa -b 4096 -C "$git_email"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
