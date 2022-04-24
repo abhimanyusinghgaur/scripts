@@ -23,6 +23,11 @@ echo "Updating system ..."
 sudo apt update
 echo "Done!" && echo
 
+# tlp for power management
+echo "Installing tlp"
+sudo apt install tlp tlp-rdw
+echo "Done!" && echo
+
 # must haves
 echo "Installing vim git zsh curl xclip jq tmux ..."
 sudo apt install -y vim git zsh curl xclip jq tmux
@@ -160,6 +165,7 @@ gh auth login
 echo "Done!"
 
 # Parting messages
+echo "Please run 'sudo tlp-stat -b' to find which drivers are required to improve power management for your system."
 echo "You may want to install Go, Google Chrome and Zoom by yourself!"
 echo "You may also want to add following extensions for Google Chrome:"
 echo "1. Vimium"
